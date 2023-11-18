@@ -20,9 +20,15 @@ With WebsiteScraper, you can enjoy your favorite comics and manga anytime, anywh
     <RepositoryUrl>https://github.com/TypNull/WebsiteScraper</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>WebsiteScraper; Shard; Manga; Comic; JSON; Parser</PackageTags>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
     <None Include="..\logo.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
