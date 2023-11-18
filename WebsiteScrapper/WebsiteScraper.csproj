@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PackageId>Shard.WebsiteScraper</PackageId>
+    <Title>WebsiteScraper</Title>
+    <Authors>Meyn</Authors>
+    <Company>Shard</Company>
+    <Version>0.1.0</Version>
+    <Description>WebsiteScraper is a powerful tool that allows you to effortlessly download your favorite comics and manga from various websites. 
+You can easily provide a JSON file containing the website links, and the scraper will do the rest. 
+Using the advanced parsing capabilities of Angelsharp and Regex, the tool efficiently extracts the desired content from the website and saves it onto your device for offline reading. 
+With WebsiteScraper, you can enjoy your favorite comics and manga anytime, anywhere, without any hassle.</Description>
+    <Copyright>Shard © 2023</Copyright>
+    <PackageProjectUrl></PackageProjectUrl>
+    <PackageIcon>logo.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/TypNull/WebsiteScraper</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>WebsiteScraper; Shard; Manga; Comic; JSON; Parser</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\logo.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AngleSharp" Version="1.0.5" />
+    <PackageReference Include="Shard.DownloadAssistant" Version="0.1.0" />
+  </ItemGroup>
+</Project>
