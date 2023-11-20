@@ -24,21 +24,21 @@ namespace WebsiteScraper.Downloadable.Books
 
         public Chapter(Comic holdingComic) => HoldingComic = holdingComic;
 
-        public ProgressableContainer<LoadRequest>? Download(string destination, string? tempDestination = null, CancellationToken? token = null, Action? finished = null)
+        public Task<ProgressableContainer<LoadRequest>> DownloadAsync(string destination, string? tempDestination = null, CancellationToken? token = null, Action? finished = null)
         {
             if (!string.IsNullOrWhiteSpace(DownloadURL))
                 return DownloadImageFromFileAsync(token);
             if (HoldingComic?.HoldingWebsite?.InputDictionary["Chapter"].GetValueOrDefault("ListExtension") != null)
-                return DownloadImageList(destination, tempDestination, token, finished);
+                return DownloadImageListAsync(destination, tempDestination, token, finished);
             else if (HoldingComic?.HoldingWebsite?.InputDictionary["Chapter"].GetValueOrDefault("PageExtension") != null)
-                return DownloadImagePage(destination, tempDestination, token, finished);
-            else return null;
+                return DownloadImagePageAsync(destination, tempDestination, token, finished);
+            else throw new Exception("Can not donwload this object");
         }
 
-        private ProgressableContainer<LoadRequest> DownloadImageList(string destination, string? tempDestination, CancellationToken? token, Action? finished = null)
+        private async Task<ProgressableContainer<LoadRequest>> DownloadImageListAsync(string destination, string? tempDestination, CancellationToken? token, Action? finished = null)
         {
             ProgressableContainer<LoadRequest> container = new();
-            _ = new OwnRequest(async DToken =>
+            await new OwnRequest(async DToken =>
             {
                 string? selector = HoldingComic?.HoldingWebsite.InputDictionary.GetValueOrDefault("Chapter")?.GetValueOrDefault("ImageList");
                 if (selector == null)
@@ -70,15 +70,15 @@ namespace WebsiteScraper.Downloadable.Books
             {
                 Handler = RequestHandler.MainRequestHandlers[1],
                 CancellationToken = token
-            });
+            }).Task;
 
             return container;
         }
 
-        private ProgressableContainer<LoadRequest> DownloadImagePage(string destination, string? tempDestination, CancellationToken? token, Action? finished = null)
+        private async Task<ProgressableContainer<LoadRequest>> DownloadImagePageAsync(string destination, string? tempDestination, CancellationToken? token, Action? finished = null)
         {
             ProgressableContainer<LoadRequest> container = new();
-            _ = new OwnRequest(async DToken =>
+            await new OwnRequest(async DToken =>
              {
                  bool stop = false;
                  string? selector = HoldingComic?.HoldingWebsite.InputDictionary?.GetValueOrDefault("Chapter")?.GetValueOrDefault("ImagePage");
@@ -116,12 +116,12 @@ namespace WebsiteScraper.Downloadable.Books
                  Handler = RequestHandler.MainRequestHandlers[1],
                  Priority = RequestPriority.Normal,
                  CancellationToken = token
-             });
+             }).Task;
 
             return container;
         }
 
-        private ProgressableContainer<LoadRequest> DownloadImageFromFileAsync(CancellationToken? token)
+        private Task<ProgressableContainer<LoadRequest>> DownloadImageFromFileAsync(CancellationToken? token)
         {
             throw new NotImplementedException();
         }

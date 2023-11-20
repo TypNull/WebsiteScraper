@@ -21,13 +21,13 @@ using WebsiteScraper;
 Website website = Website.LoadWebsite("Destination");
 ```
 
-Make sure to replace "Destination" with the desired URL of the website you want to scrape.
+Make sure to replace "Destination" with the destination file of the website you want to scrape. An example for a website file is provided in the repository.
 
 3. Download all links for new and recommended comics:
 
 ```csharp
-website.LoadNewsAsync<Comic>();
-website.LoadExtraAsync<Comic>("Recommended");
+Comic[] newComics = website.LoadNewsAsync<Comic>();
+Comic[] recommendedComics = website.LoadExtraAsync<Comic>("Recommended");
 ```
 
 These methods fetch all the links for new and recommended comics respectively. The `Comic` class should be defined based on your specific website structure.
@@ -43,7 +43,7 @@ This method retrieves and updates the comic information for the previously loade
 5. Download the first chapter of a comic:
 
 ```csharp
-comic.Chapter[0].Download("Destination");
+comic.Chapter[0].DownloadAsync("Destination");
 ```
 Replace "Destination" with the desired location to save the downloaded chapter.
 
