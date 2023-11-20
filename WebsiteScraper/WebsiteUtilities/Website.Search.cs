@@ -182,7 +182,7 @@ namespace WebsiteScraper.WebsiteUtilities
             StringBuilder tags = new();
             foreach (KeyValuePair<string, DisableTagState> tag in _lastSearch.DisableTags)
             {
-                if (DisableTagSearch.TryGetValue(tag.Key, out TagInfo value))
+                if (DisableTagSearch.TryGetValue(tag.Key, out TagInfo? value))
                 {
                     tags.Append(tag.Value == DisableTagState.None ? value.Normal : (tag.Value == DisableTagState.Enabeld ? value.Include : value.Exclude));
 

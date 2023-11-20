@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WebsiteScrapper\WebsiteScraper.csproj" />
+    <ProjectReference Include="..\WebsiteScraper\WebsiteScraper.csproj" />
   </ItemGroup>
 
 </Project>
