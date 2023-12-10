@@ -1,0 +1,842 @@
+{
+  "Name": "Mangaclash",
+  "Suffix": ".com",
+  "Description": "This website has been made specifically for all manga lovers who want to read all kinds of manhua and even manhwa.",
+  "Url": "mangaclash.com",
+  "Hexcolor": "#6eaf28",
+  "SearchPattern": "[url]?s=[search]\u0026post_type=wp-manga[tags][genres condition][author][artist][year]\u0026adult=",
+  "Seperator": "\u002B",
+  "EnableTags": [
+    {
+      "Title": "4-koma",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=4-koma"
+    },
+    {
+      "Title": "Academy",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=academy"
+    },
+    {
+      "Title": "Action",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=action"
+    },
+    {
+      "Title": "Action Adventure",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=action-adventure"
+    },
+    {
+      "Title": "Action. fantasy",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=action.-fantasy"
+    },
+    {
+      "Title": "Adaptation",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=adaptation"
+    },
+    {
+      "Title": "Adult",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=adult"
+    },
+    {
+      "Title": "Adventure",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=adventure"
+    },
+    {
+      "Title": "ANIMALS",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=animals"
+    },
+    {
+      "Title": "Another chance",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=another-chance"
+    },
+    {
+      "Title": "ANTHOLOGY",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=anthology"
+    },
+    {
+      "Title": "Artifact",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=artifact"
+    },
+    {
+      "Title": "Beasts",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=beasts"
+    },
+    {
+      "Title": "Bullying",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=bullying"
+    },
+    {
+      "Title": "Calm Protagonist",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=calm-protagonist"
+    },
+    {
+      "Title": "Cheat",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=cheat"
+    },
+    {
+      "Title": "Cheat Ability",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=cheat-ability"
+    },
+    {
+      "Title": "Cheat Systems",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=cheat-systems"
+    },
+    {
+      "Title": "Childhood Friends",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=childhood-friends"
+    },
+    {
+      "Title": "Comedy",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=comedy"
+    },
+    {
+      "Title": "Coming Soon",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=coming-soon"
+    },
+    {
+      "Title": "Cooking",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=cooking"
+    },
+    {
+      "Title": "Crime",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=crime"
+    },
+    {
+      "Title": "Cultivation",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=cultivation"
+    },
+    {
+      "Title": "Dark Fantasy",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=dark-fantasy"
+    },
+    {
+      "Title": "Demon",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=demon"
+    },
+    {
+      "Title": "Demons",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=demons"
+    },
+    {
+      "Title": "Doujinshi",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=doujinshi"
+    },
+    {
+      "Title": "Drama",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=drama"
+    },
+    {
+      "Title": "Dungeon",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=dungeon"
+    },
+    {
+      "Title": "Dungeons",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=dungeons"
+    },
+    {
+      "Title": "Ecchi",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=ecchi"
+    },
+    {
+      "Title": "English",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=english"
+    },
+    {
+      "Title": "Erotica",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=erotica"
+    },
+    {
+      "Title": "Fantasy",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=fantasy"
+    },
+    {
+      "Title": "FANTASY .R-18",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=fantasy-r-18"
+    },
+    {
+      "Title": "FANTASY MANHWA",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=fantasy-manhwa"
+    },
+    {
+      "Title": "Fighting",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=fighting"
+    },
+    {
+      "Title": "Food",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=food"
+    },
+    {
+      "Title": "Full Color",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=full-color"
+    },
+    {
+      "Title": "Fusion Fantasy",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=fusion-fantasy"
+    },
+    {
+      "Title": "Gal ni Yasashii Otaku-kun",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=gal-ni-yasashii-otaku-kun"
+    },
+    {
+      "Title": "Game",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=game"
+    },
+    {
+      "Title": "Games",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=games"
+    },
+    {
+      "Title": "Gaming",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=gaming"
+    },
+    {
+      "Title": "Gender Bender",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=gender-bender"
+    },
+    {
+      "Title": "GENDERSWAP",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=genderswap"
+    },
+    {
+      "Title": "GHOSTS",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=ghosts"
+    },
+    {
+      "Title": "gods",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=gods"
+    },
+    {
+      "Title": "GORE",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=gore"
+    },
+    {
+      "Title": "GYARU",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=gyaru"
+    },
+    {
+      "Title": "Harem",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=harem"
+    },
+    {
+      "Title": "Hero",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=hero"
+    },
+    {
+      "Title": "Historical",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=historical"
+    },
+    {
+      "Title": "Horror",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=horror"
+    },
+    {
+      "Title": "Hot blood",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=hot-blood"
+    },
+    {
+      "Title": "Hunter",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=hunter"
+    },
+    {
+      "Title": "Isekai",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=isekai"
+    },
+    {
+      "Title": "Japanese",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=japanese"
+    },
+    {
+      "Title": "Josei",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=josei"
+    },
+    {
+      "Title": "Kids",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=kids"
+    },
+    {
+      "Title": "Korean",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=korean"
+    },
+    {
+      "Title": "Ladies",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=ladies"
+    },
+    {
+      "Title": "Leveling",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=leveling"
+    },
+    {
+      "Title": "LONG STRIP",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=long-strip"
+    },
+    {
+      "Title": "Magic",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=magic"
+    },
+    {
+      "Title": "Magical Girls",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=magical-girls"
+    },
+    {
+      "Title": "Manga",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=manga"
+    },
+    {
+      "Title": "Manhua",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=manhua"
+    },
+    {
+      "Title": "Manhwa",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=manhwa"
+    },
+    {
+      "Title": "Martial arts",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=martial-arts"
+    },
+    {
+      "Title": "Mature",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=mature"
+    },
+    {
+      "Title": "Mecha",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=mecha"
+    },
+    {
+      "Title": "Medical",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=medical"
+    },
+    {
+      "Title": "Military",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=military"
+    },
+    {
+      "Title": "MMORPG",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=mmorpg"
+    },
+    {
+      "Title": "Modern Fantasy",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=modern-fantasy"
+    },
+    {
+      "Title": "Modern Setting",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=modern-setting"
+    },
+    {
+      "Title": "Monster",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=monster"
+    },
+    {
+      "Title": "MONSTER GIRL",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=monster-girl"
+    },
+    {
+      "Title": "Monster girls",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=monster-girls"
+    },
+    {
+      "Title": "Monsters",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=monsters"
+    },
+    {
+      "Title": "Murim",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=murim"
+    },
+    {
+      "Title": "Mystery",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=mystery"
+    },
+    {
+      "Title": "Necromancer",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=necromancer"
+    },
+    {
+      "Title": "Office workers",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=office-workers"
+    },
+    {
+      "Title": "OFFICIAL COLORED",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=official-colored"
+    },
+    {
+      "Title": "One shot",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=one-shot"
+    },
+    {
+      "Title": "Op-Mc",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=op-mc"
+    },
+    {
+      "Title": "Otherworld",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=otherworld"
+    },
+    {
+      "Title": "Overpowere",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=overpowere"
+    },
+    {
+      "Title": "Overpowered",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=overpowered"
+    },
+    {
+      "Title": "Philosophical",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=philosophical"
+    },
+    {
+      "Title": "Police",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=police"
+    },
+    {
+      "Title": "Post-Apocalyptic",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=post-apocalyptic"
+    },
+    {
+      "Title": "Psychological",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=psychological"
+    },
+    {
+      "Title": "R-18",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=r-18"
+    },
+    {
+      "Title": "Rebirth",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=rebirth"
+    },
+    {
+      "Title": "Regression",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=regression"
+    },
+    {
+      "Title": "Reincarnation",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=reincarnation"
+    },
+    {
+      "Title": "Return",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=return"
+    },
+    {
+      "Title": "Returner",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=returner"
+    },
+    {
+      "Title": "Revenge",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=revenge"
+    },
+    {
+      "Title": "REVERSE HAREM",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=reverse-harem"
+    },
+    {
+      "Title": "Romance",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=romance"
+    },
+    {
+      "Title": "Royal family",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=royal-family"
+    },
+    {
+      "Title": "SAMURAI",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=samurai"
+    },
+    {
+      "Title": "School life",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=school-life"
+    },
+    {
+      "Title": "Sci fi",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=sci-fi"
+    },
+    {
+      "Title": "Seinen",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=seinen"
+    },
+    {
+      "Title": "Sexual violence",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=sexual-violence"
+    },
+    {
+      "Title": "Shotacon",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=shotacon"
+    },
+    {
+      "Title": "Shoujo",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=shoujo"
+    },
+    {
+      "Title": "Shoujo ai",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=shoujo-ai"
+    },
+    {
+      "Title": "Shoujoai",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=shoujoai"
+    },
+    {
+      "Title": "Shouju",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=shouju"
+    },
+    {
+      "Title": "Shounen",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=shounen"
+    },
+    {
+      "Title": "Shounen ai",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=shounen-ai"
+    },
+    {
+      "Title": "Shounen(B)",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=shounen-b"
+    },
+    {
+      "Title": "Slice of life",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=slice-of-life"
+    },
+    {
+      "Title": "Smut",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=smut"
+    },
+    {
+      "Title": "Sports",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=sports"
+    },
+    {
+      "Title": "SUGGESTIVE",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=suggestive"
+    },
+    {
+      "Title": "Super Power",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=super-power"
+    },
+    {
+      "Title": "Superhero",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=superhero"
+    },
+    {
+      "Title": "Supernatural",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=supernatural"
+    },
+    {
+      "Title": "Survival",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=survival"
+    },
+    {
+      "Title": "Suspense",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=suspense"
+    },
+    {
+      "Title": "System",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=system"
+    },
+    {
+      "Title": "teacher",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=teacher"
+    },
+    {
+      "Title": "Thriller",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=thriller"
+    },
+    {
+      "Title": "Time Travel",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=time-travel"
+    },
+    {
+      "Title": "tower",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=tower"
+    },
+    {
+      "Title": "Tragedy",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=tragedy"
+    },
+    {
+      "Title": "Vampire",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=vampire"
+    },
+    {
+      "Title": "VAMPIRES",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=vampires"
+    },
+    {
+      "Title": "Video",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=video"
+    },
+    {
+      "Title": "VIDEO GAMES",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=video-games"
+    },
+    {
+      "Title": "Villainess",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=villainess"
+    },
+    {
+      "Title": "Violence",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=violence"
+    },
+    {
+      "Title": "Virtual Reality",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=virtual-reality"
+    },
+    {
+      "Title": "VR",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=vr"
+    },
+    {
+      "Title": "WEB COMIC",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=web-comic"
+    },
+    {
+      "Title": "Webtoon",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=webtoon"
+    },
+    {
+      "Title": "Webtoons",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=webtoons"
+    },
+    {
+      "Title": "Wuxia",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=wuxia"
+    },
+    {
+      "Title": "Yaoi",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=yaoi"
+    },
+    {
+      "Title": "Yuri",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=yuri"
+    },
+    {
+      "Title": "ZOMBIES",
+      "NotSet": null,
+      "Enabled": "\u0026genre[]=zombies"
+    }
+  ],
+  "DisableTags": [],
+  "TextTags": [
+    {
+      "Title": "Author",
+      "NotSet": "\u0026author=",
+      "InputPattern": "\u0026author=[input]",
+      "Seperator": "\u002B"
+    },
+    {
+      "Title": "Artist",
+      "NotSet": "\u0026artist=",
+      "InputPattern": "\u0026artist=[input]",
+      "Seperator": "\u002B"
+    },
+    {
+      "Title": "Year",
+      "NotSet": "\u0026release=",
+      "InputPattern": "\u0026release=[input]",
+      "Seperator": "\u002B"
+    }
+  ],
+  "RadioTags": [
+    {
+      "Title": "Genres Condition",
+      "DefaultKey": "or",
+      "Tags": [
+        {
+          "Title": "OR",
+          "NotSet": null,
+          "Enabled": "\u0026op="
+        },
+        {
+          "Title": "AND",
+          "NotSet": null,
+          "Enabled": "\u0026op=1"
+        }
+      ]
+    }
+  ],
+  "Map": {
+    "Extra": {
+      "NewComicPattern": "[url]",
+      "RecommendedComicPattern": "[url]",
+      "NewComicQuery": "div[class=\u0022c-blog-listing c-page__content manga_content\u0022]  h3 \u003E a [attribute]{href}",
+      "RecommendedComicQuery": "div[class=\u0022c-widget-content style-1 with-button\u0022] h5[class=\u0022widget-title\u0022] \u003Ea [attribute]{href}"
+    },
+    "ComicSearch": {
+      "ContainerQuery": "div[class=\u0022c-tabs-item\u0022] \u003E div[class=\u0022row c-tabs-item__content\u0022]",
+      "LinkQuery": "h3[class=h4] \u003Ea [attribute]{href}",
+      "TitleQuery": "h3[class=h4]",
+      "DescriptionQuery": "div[class=\u0022summary-content\u0022]",
+      "AlternativeTitlesQuery": "div[class=\u0022post-content_item mg_alternative nofloat\u0022] \u003E div[class=\u0022summary-content\u0022]  [regex]{(?\u003C=\\s)\\w\u002B.*?(?=\\s(;|$))}",
+      "GenresQuery": "div[class=\u0022summary-content\u0022] \u003E a",
+      "LastUpdatedQuery": "div[class=\u0022meta-item post-on\u0022] [format]{yyyy-MM-dd hh:mm:ss}",
+      "CoverQuery": "img[class=\u0022img-responsive lazyload effect-fade\u0022] [attribute]{data-src} [regex]{https://.*}",
+      "LastChapterLinkQuery": "span[class=\u0022font-meta chapter\u0022] \u003E a [attribute]{href}",
+      "StatusQuery": "div[class=\u0022post-content_item mg_status nofloat\u0022] \u003E div[class=\u0022summary-content\u0022]"
+    },
+    "ComicChapter": {
+      "AddToPagedUrl": "/p/[page]/",
+      "AddToListUrl": "?style=list",
+      "ListImageQuery": "img[id^=\u0022image-\u0022] [attribute]{data-src} [regex]{(?\u003C=.*)http.*$}",
+      "PageImageQuery": "img[id^=\u0022image-\u0022] [attribute]{data-src} [regex]{(?\u003C=.*)http.*$}"
+    },
+    "Comic": {
+      "Seperator": "-",
+      "DirectSearchPattern": "[url]manga/[name]",
+      "ContainerQuery": ".site-content",
+      "TitleQuery": ".post-title \u003E h1",
+      "DescriptionQuery": "div [class=\u0022summary__content show-more\u0022]",
+      "CoverQuery": "div[class=\u0022summary_image\u0022] \u003E a \u003E img  [attribute]{data-src}  [regex]{(?\u003C=.*)http.*$}",
+      "StatusQuery": "div[class=\u0022post-status\u0022] \u003E div \u003E div[class=\u0022summary-content\u0022]",
+      "AuthorQuery": "div[class=\u0022post-content\u0022] [regex]{(?\u003C=type\\s*Author\\(s\\)\\s\u002B).*?$}",
+      "AlternativeTitlesQuery": " div[class=\u0022post-content\u0022] :nth-of-type(5) :nth-of-type(2)  [regex]{\\w\u002B.*?(?=\\s*(,|$))}",
+      "GenresQuery": "div[class=\u0022genres-content\u0022] \u003E a",
+      "DateQuery": "span[class=\u0022chapter-release-date\u0022] \u003E i  [format]{MM/dd/yyyy}",
+      "OrderOfLinks": "2",
+      "ChapterContainerQuery": "li[class=\u0022wp-manga-chapter    \u0022]",
+      "ChapterLinkQuery": "a [attribute]{href}",
+      "ChapterTitleQuery": "a [regex]{(?\u003C=-\\s).*?$}",
+      "ChapterDownloadLinkQuery": ".",
+      "ChapterNumberQuery": "a [regex]{(?s)(?\u003C=\\s)\\d\u002B(.\\d*)?(?=(\\s|$))}",
+      "ChapterDateQuery": "i [format]{MM/dd/yyyy}"
+    }
+  },
+  "Logo": "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"
+}
