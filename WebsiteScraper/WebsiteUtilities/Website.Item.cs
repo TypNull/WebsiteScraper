@@ -23,11 +23,11 @@ namespace WebsiteScraper.WebsiteUtilities
             return createdObject;
         }
 
-        public async Task<TResult[]> LoadNewsAsync<TResult>() where TResult : IDownloadable<TResult> => await LoadExtraAsync<TResult>("News");
+        public async Task<TResult[]> LoadNewAsync<TResult>() where TResult : IDownloadable<TResult> => await LoadExtraAsync<TResult>("New");
 
         public async Task<TResult[]> LoadExtraAsync<TResult>(string name) where TResult : IDownloadable<TResult>
         {
-            string? selector = InputDictionary?.GetValueOrDefault("Extra")?.GetValueOrDefault(name + "Links");
+            string? selector = GetValue<Dictionary<string, string>>("Extra")?.GetValueOrDefault(name + typeof(TResult).Name + "Query");
             if (string.IsNullOrWhiteSpace(selector))
                 return Array.Empty<TResult>();
             await GetStatusTask();
@@ -35,7 +35,7 @@ namespace WebsiteScraper.WebsiteUtilities
             if (IsOnline)
                 await new OwnRequest(async DToken =>
                 {
-                    HttpRequestMessage? msg = new(HttpMethod.Get, InputDictionary?.GetValueOrDefault("Extra")?.GetValueOrDefault(name + "Extension")?.Replace("[url]", RedirectedUrl) ?? RedirectedUrl);
+                    HttpRequestMessage? msg = new(HttpMethod.Get, GetValue<Dictionary<string, string>>("Extra")?.GetValueOrDefault(name + typeof(TResult).Name + "Pattern")?.Replace("[url]", RedirectedUrl) ?? RedirectedUrl);
                     HttpResponseMessage res = await HttpGet.HttpClient.SendAsync(msg, HttpCompletionOption.ResponseContentRead, DToken);
                     if (!res.IsSuccessStatusCode)
                         return false;

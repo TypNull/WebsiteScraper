@@ -21,7 +21,7 @@ namespace WebsiteScraper.Downloadable.Books
         [JsonIgnore]
         public Website HoldingWebsite { get; private init; }
         public Comic(string url, string title, Website website) : base(url, title) { HoldingWebsite = website; }
-        protected Dictionary<string, string> WebsiteKeys => HoldingWebsite.InputDictionary[nameof(Comic)];
+        protected Dictionary<string, string> WebsiteKeys => HoldingWebsite.GetValue<Dictionary<string, string>>(nameof(Comic)) ?? new();
 
         protected bool _isSearchObject;
         public string? CoverUrl { get; set; }
@@ -40,18 +40,18 @@ namespace WebsiteScraper.Downloadable.Books
 
         public static Comic CreateSearch(IElement html, Website website)
         {
-            Dictionary<string, string>? searchId = website.InputDictionary.GetValueOrDefault(nameof(Comic) + "Search");
+            Dictionary<string, string>? searchId = website.GetValue<Dictionary<string, string>>(nameof(Comic) + "Search");
             string dateSelector = string.Empty;
-            string format = searchId?.GetValueOrDefault(nameof(LastUpdated))?.GetDateFormat(out dateSelector!) ?? string.Empty;
-            Comic comic = new(GetParsed(html, searchId?.GetValueOrDefault(nameof(Url))),
-                GetParsed(html, searchId?.GetValueOrDefault(nameof(Title))), website)
+            string format = searchId?.GetValueOrDefault("LastUpdatedQuery")?.GetDateFormat(out dateSelector!) ?? string.Empty;
+            Comic comic = new(GetParsed(html, searchId?.GetValueOrDefault("LinkQuery")),
+                GetParsed(html, searchId?.GetValueOrDefault("TitleQuery")), website)
             {
-                Description = GetParsed(html, searchId?.GetValueOrDefault(nameof(Description))),
-                AlternativeTitles = GetParsedArray(html, searchId?.GetValueOrDefault(nameof(AlternativeTitles)) ?? string.Empty).Select((x) => x.UnicodeToText()).ToArray(),
-                Genres = GetParsedArray(html, searchId?.GetValueOrDefault(nameof(Genres)) ?? string.Empty).Select((x) => x.UnicodeToText()).ToArray(),
+                Description = GetParsed(html, searchId?.GetValueOrDefault("DescriptionQuery")),
+                AlternativeTitles = GetParsedArray(html, searchId?.GetValueOrDefault("AlternativeTitlesQuery") ?? string.Empty).Select((x) => x.UnicodeToText()).ToArray(),
+                Genres = GetParsedArray(html, searchId?.GetValueOrDefault("GenresQuery") ?? string.Empty).Select((x) => x.UnicodeToText()).ToArray(),
                 LastUpdated = StringToDateTime(GetParsed(html, dateSelector), format),
-                Status = StringToStatus(GetParsed(html, searchId?.GetValueOrDefault(nameof(Status)))),
-                CoverUrl = GetParsed(html, searchId?.GetValueOrDefault("Cover")),
+                Status = StringToStatus(GetParsed(html, searchId?.GetValueOrDefault("StatusQuery"))),
+                CoverUrl = GetParsed(html, searchId?.GetValueOrDefault("CoverQuery")),
                 _isSearchObject = true,
                 HoldingWebsite = website
             };
@@ -67,24 +67,24 @@ namespace WebsiteScraper.Downloadable.Books
         {
             if (html == null)
                 return;
-            IElement? container = WebsiteKeys.GetValueOrDefault("Container")?.GetElement(html);
+            IElement? container = WebsiteKeys.GetValueOrDefault("ContainerQuery")?.GetElement(html);
             if (container == null)
                 return;
-            Title = GetParsed(container, WebsiteKeys.GetValueOrDefault(nameof(Title)));
+            Title = GetParsed(container, WebsiteKeys.GetValueOrDefault("TitleQuery"));
             List<Chapter> chapters = new();
 
-            IElement[] chapterContainer = WebsiteKeys.GetValueOrDefault("ChapterContainer")?.GetAllElements(container) ?? Array.Empty<IElement>();
-            string? chapterDateSelector = WebsiteKeys.GetValueOrDefault("ChapterDate");
+            IElement[] chapterContainer = WebsiteKeys.GetValueOrDefault("ChapterContainerQuery")?.GetAllElements(container) ?? Array.Empty<IElement>();
+            string? chapterDateSelector = WebsiteKeys.GetValueOrDefault("ChapterDateQuery");
             string format = chapterDateSelector.GetDateFormat(out chapterDateSelector);
             foreach (IElement chapter in chapterContainer)
             {
-                _ = float.TryParse(GetParsed(chapter, WebsiteKeys.GetValueOrDefault("ChapterNumber")).Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture, out float num);
+                _ = float.TryParse(GetParsed(chapter, WebsiteKeys.GetValueOrDefault("ChapterNumberQuery")).Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture, out float num);
                 Chapter foundChapter = new(this)
                 {
-                    Url = GetParsed(chapter, WebsiteKeys.GetValueOrDefault("ChapterUrl")),
-                    Title = GetParsed(chapter, WebsiteKeys.GetValueOrDefault("ChapterTitle")),
+                    Url = GetParsed(chapter, WebsiteKeys.GetValueOrDefault("ChapterLinkQuery")),
+                    Title = GetParsed(chapter, WebsiteKeys.GetValueOrDefault("ChapterTitleQuery")),
                     UploadDateTime = StringToDateTime(GetParsed(chapter, chapterDateSelector), format),
-                    DownloadURL = GetParsed(chapter, WebsiteKeys.GetValueOrDefault("ChapterDownloadUrl")),
+                    DownloadURL = GetParsed(chapter, WebsiteKeys.GetValueOrDefault("ChapterDownloadLinkQuery")),
                     Number = num
                 };
                 chapters.Add(foundChapter);
@@ -96,19 +96,19 @@ namespace WebsiteScraper.Downloadable.Books
             for (int i = 0; i < chapters.Count; i++)
                 chapters[i].SetOrder(1 + i);
 
-            string? dateSelector = WebsiteKeys.GetValueOrDefault(nameof(LastUpdated));
+            string? dateSelector = WebsiteKeys.GetValueOrDefault("DateQuery");
             format = dateSelector.GetDateFormat(out dateSelector);
-            Description = RemoveHTML(GetParsed(html, WebsiteKeys.GetValueOrDefault(nameof(Description))));
-            Genres = GetParsedArray(html, WebsiteKeys[nameof(Genres)]).Select((x) => x.UnicodeToText()).ToArray();
-            Author = GetParsed(container, WebsiteKeys.GetValueOrDefault(nameof(Author)));
+            Description = RemoveHTML(GetParsed(html, WebsiteKeys.GetValueOrDefault("DescriptionQuery")));
+            Genres = GetParsedArray(html, WebsiteKeys["GenresQuery"]).Select((x) => x.UnicodeToText()).ToArray();
+            Author = GetParsed(container, WebsiteKeys.GetValueOrDefault("AuthorQuery"));
             LastUpdated = StringToDateTime(GetParsed(html, dateSelector), format);
-            Status = StringToStatus(GetParsed(html, WebsiteKeys.GetValueOrDefault(nameof(Status))));
+            Status = StringToStatus(GetParsed(html, WebsiteKeys.GetValueOrDefault("StatusQuery")));
 
-            AlternativeTitles = GetParsedArray(html, WebsiteKeys.GetValueOrDefault(nameof(AlternativeTitles))).Select((x) => x.UnicodeToText()).ToArray();
+            AlternativeTitles = GetParsedArray(html, WebsiteKeys.GetValueOrDefault("AlternativeTitlesQuery")).Select((x) => x.UnicodeToText()).ToArray();
 
             Chapter = chapters.ToArray();
             _isSearchObject = false;
-            CoverUrl = GetParsed(html, WebsiteKeys.GetValueOrDefault("Cover"));
+            CoverUrl = GetParsed(html, WebsiteKeys.GetValueOrDefault("CoverQuery"));
 
             OnPropertyChanged("Update");
         }

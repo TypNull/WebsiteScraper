@@ -16,10 +16,18 @@ namespace WebsiteScraper.Downloadable.Books
         public int Order { get; private set; }
         public DateTime UploadDateTime { get; init; }
         public Comic HoldingComic { get; init; }
+        private Dictionary<string, string>? _dictionary;
         public void SetOrder(int i)
         {
             if (Order == 0)
                 Order = i;
+        }
+
+        private string? GetValue(string key)
+        {
+            if (_dictionary == null)
+                _dictionary = HoldingComic?.HoldingWebsite?.GetValue<Dictionary<string, string>>("ComicChapter");
+            return _dictionary?.GetValueOrDefault(key);
         }
 
         public Chapter(Comic holdingComic) => HoldingComic = holdingComic;
@@ -28,9 +36,9 @@ namespace WebsiteScraper.Downloadable.Books
         {
             if (!string.IsNullOrWhiteSpace(DownloadURL))
                 return DownloadImageFromFileAsync(token);
-            if (HoldingComic?.HoldingWebsite?.InputDictionary["Chapter"].GetValueOrDefault("ListExtension") != null)
+            if (GetValue("AddToListUrl") != null)
                 return DownloadImageListAsync(destination, tempDestination, token, finished);
-            else if (HoldingComic?.HoldingWebsite?.InputDictionary["Chapter"].GetValueOrDefault("PageExtension") != null)
+            else if (GetValue("AddToPagedUrl") != null)
                 return DownloadImagePageAsync(destination, tempDestination, token, finished);
             else throw new Exception("Can not donwload this object");
         }
@@ -40,10 +48,10 @@ namespace WebsiteScraper.Downloadable.Books
             ProgressableContainer<LoadRequest> container = new();
             await new OwnRequest(async DToken =>
             {
-                string? selector = HoldingComic?.HoldingWebsite.InputDictionary.GetValueOrDefault("Chapter")?.GetValueOrDefault("ImageList");
+                string? selector = GetValue("ListImageQuery");
                 if (selector == null)
                     return false;
-                using HttpRequestMessage? msg = new(HttpMethod.Get, Url + (HoldingComic?.HoldingWebsite.InputDictionary.GetValueOrDefault("Chapter")?.GetValueOrDefault("ListExtension") ?? string.Empty));
+                using HttpRequestMessage? msg = new(HttpMethod.Get, Url + (GetValue("AddToListUrl") ?? string.Empty));
                 using HttpResponseMessage res = await HttpGet.HttpClient.SendAsync(msg, HttpCompletionOption.ResponseHeadersRead, DToken);
                 if (!res.IsSuccessStatusCode)
                     return false;
@@ -81,12 +89,12 @@ namespace WebsiteScraper.Downloadable.Books
             await new OwnRequest(async DToken =>
              {
                  bool stop = false;
-                 string? selector = HoldingComic?.HoldingWebsite.InputDictionary?.GetValueOrDefault("Chapter")?.GetValueOrDefault("ImagePage");
+                 string? selector = GetValue("PageImageQuery");
                  if (selector == null)
                      stop = true;
                  for (int i = 1; !stop; i++)
                  {
-                     using HttpRequestMessage? msg = new(System.Net.Http.HttpMethod.Get, Url + HoldingComic?.HoldingWebsite?.InputDictionary["Chapter"].GetValueOrDefault("PageExtension")?.Replace("[page]", i.ToString()));
+                     using HttpRequestMessage? msg = new(HttpMethod.Get, Url + GetValue("AddToPagedUrl")?.Replace("[page]", i.ToString()));
                      using HttpResponseMessage res = await HttpGet.HttpClient.SendAsync(msg, HttpCompletionOption.ResponseContentRead, DToken);
                      if (!res.IsSuccessStatusCode)
                          break;

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
@@ -88,14 +87,14 @@ namespace WebsiteScraper.Downloadable
             dateTime = default;
             if (value == null || value == string.Empty)
                 return false;
-            Debug.Assert(true, "Proof ParseDate in Downloadable Object");
-            if ((format == string.Empty || format == null) && DateTime.TryParse(value, out dateTime))
+            if (DateTime.TryParseExact(value, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime))
+            {
                 return true;
-            else if (DateTime.TryParseExact(value,
-                            format,
-                            CultureInfo.InvariantCulture,
-                            DateTimeStyles.None, out dateTime))
+            }
+            else if (DateTime.TryParse(value, out dateTime))
+            {
                 return true;
+            }
             else if (new Regex(@"\d+\s?((min(ute)?(s)?)|(hour(s)?)|(day(s)?))\s?ago").IsMatch(value))
             {
                 dateTime = default;

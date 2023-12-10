@@ -116,9 +116,10 @@ namespace WebsiteScraper
 
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Debug.WriteLine(selector);
+                Debug.WriteLine(ex);
             }
             return found;
         }
@@ -160,8 +161,9 @@ namespace WebsiteScraper
             {
                 return element.QuerySelector(selector);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Debug.WriteLine(ex);
             }
             return null;
         }
@@ -178,9 +180,9 @@ namespace WebsiteScraper
             {
                 return element.QuerySelectorAll(selector).ToArray();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                Debug.WriteLine(ex);
             }
             return Array.Empty<IElement>();
         }

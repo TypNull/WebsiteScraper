@@ -4,7 +4,7 @@ using Requests;
 using Requests.Options;
 using System.Diagnostics;
 using System.Text;
-using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 using WebsiteScraper.Downloadable;
 
 namespace WebsiteScraper.WebsiteUtilities
@@ -12,36 +12,33 @@ namespace WebsiteScraper.WebsiteUtilities
 
     public partial class Website
     {
-        public string SearchString
+        public string SearchPattern
         {
-            get => _searchString; init
+            get => _searchPattern; init
             {
-                _searchString = value;
-                ImplementsSites = value.Contains("[page]") || value.Contains("[page as 0]");
+                _searchPattern = value;
+                ImplementsSites = value.Contains("[page");
             }
         }
-        private string _searchString = string.Empty;
+        private string _searchPattern = string.Empty;
         public bool ImplementsSites { get; private set; }
-        public bool ImplementsExcludeGenres { get; private set; }
-        public string DirectSearchString { get; init; } = string.Empty;
-        public char Seperator { get; init; }
-        public string[] StatusSearch { get; init; } = Array.Empty<string>();
-        public string[] TypeSearch { get; init; } = Array.Empty<string>();
-        public string[] AuthorSearch { get; init; } = Array.Empty<string>();
+        public string Seperator { get; init; } = string.Empty;
         public bool CanSearchNext { get; private set; }
         public int ItemsPerSearch { get; set; } = 20;
-        public Dictionary<string, (string notSet, string enabled)> TagSearch { get; init; } = new();
-        public Dictionary<string, TagInfo> DisableTagSearch { get; init; } = new();
+        public EnableAbleTag[]? EnableTags { get; set; }
+        public DisableAbleTag[]? DisableTags { get; set; }
+        public TextTag[]? TextTags { get; set; }
+        public RadioTag[]? RadioTags { get; set; }
         private CancellationTokenSource? CTS { get; set; }
 
-        private SearchInfo _lastSearch = new(string.Empty);
+        private SearchInfo? _lastSearch;
         private int _lastSearchSite = 1;
         private IEnumerable<object>? _searchRest;
 
         public async Task<TResult[]> SearchNextAsync<TResult>() where TResult : ISearchable<TResult>
         {
             List<TResult> result = new();
-            if (string.IsNullOrWhiteSpace(_lastSearch.Search))
+            if (string.IsNullOrWhiteSpace(_lastSearch?.Search))
                 return result.ToArray();
             result.AddRange(_searchRest?.Cast<TResult>() ?? Array.Empty<TResult>());
             _searchRest = null;
@@ -79,7 +76,7 @@ namespace WebsiteScraper.WebsiteUtilities
             return await SearchAsync<TResult>();
         }
 
-        public async Task<TResult[]> SearchAsync<TResult>(string search, int site = 1) where TResult : ISearchable<TResult> => await SearchAsync<TResult>(new SearchInfo(search), site);
+        public async Task<TResult[]> SearchAsync<TResult>(string search, int site = 1) where TResult : ISearchable<TResult> => await SearchAsync<TResult>(new SearchInfo(search, this), site);
 
         private async Task<TResult[]> SearchAsync<TResult>() where TResult : ISearchable<TResult>
         {
@@ -87,11 +84,11 @@ namespace WebsiteScraper.WebsiteUtilities
             if (!IsOnline)
                 return Array.Empty<TResult>();
             List<TResult> foundList = new();
-            if (_lastSearch.IsDirect)
+            if (_lastSearch!.IsDirect)
             {
-                TResult result = TResult.Create(CreateDirectURL().ToString(), this);
+                TResult result = TResult.Create(CreateDirectURL(typeof(TResult).Name).ToString(), this);
                 await result.UpdateAsync(CTS?.Token);
-                _lastSearch = new(string.Empty);
+                _lastSearch = new(string.Empty, this);
                 return new TResult[] { result };
             }
             await new OwnRequest(async (token) =>
@@ -100,8 +97,23 @@ namespace WebsiteScraper.WebsiteUtilities
                 do
                 {
                     StringBuilder searchUrl = new(genertedUrl.ToString());
+                    string genrated = genertedUrl.ToString();
                     if (ImplementsSites)
-                        searchUrl.Replace("[page]", _lastSearchSite++.ToString());
+                    {
+                        if (genrated.Contains("[page]"))
+                            searchUrl.Replace("[page]", _lastSearchSite++.ToString());
+                        else
+                        {
+                            if (new Regex("[[]page as ([0-9]+)[]]") is Regex reg && reg.Match(genrated) is Match match && match.Success)
+                            {
+                                if (int.TryParse(match.Groups[1].Value, out int pagestart))
+                                    searchUrl.Replace($"[page as {pagestart}]", (pagestart + _lastSearchSite++).ToString());
+                                else
+                                    searchUrl.Replace($"[page as {match.Groups[1].Value}]", _lastSearchSite++.ToString());
+                            }
+                        }
+                    }
+
                     List<TResult> found = await DownloadSiteAndGetItemsAsync<TResult>(searchUrl.ToString(), token);
                     if (found.Count == 0)
                         break;
@@ -110,7 +122,7 @@ namespace WebsiteScraper.WebsiteUtilities
                         break;
                 } while (ImplementsSites && foundList.Count <= ItemsPerSearch);
                 if (foundList.Count < ItemsPerSearch)
-                    _lastSearch = new(string.Empty);
+                    _lastSearch = new(string.Empty, this);
                 return true;
             }, new()
             {
@@ -141,7 +153,7 @@ namespace WebsiteScraper.WebsiteUtilities
         /// <returns>A List with all SearchMangas in Website</returns>
         private async Task<List<TResult>> DownloadSiteAndGetItemsAsync<TResult>(string searchUrl, CancellationToken token) where TResult : ISearchable<TResult>
         {
-            Debug.WriteLine(searchUrl);
+            Debug.WriteLine($"The website {searchUrl} is searched for {typeof(TResult).Name}");
             using HttpRequestMessage msg = new(HttpMethod.Get, searchUrl);
             using HttpResponseMessage res = await HttpGet.HttpClient.SendAsync(msg, token);
 
@@ -151,9 +163,10 @@ namespace WebsiteScraper.WebsiteUtilities
             if (html == null)
                 return new();
             List<TResult> found = new();
-            string? containerSelector = InputDictionary[typeof(TResult).Name + "Search"].GetValueOrDefault("Items");
+            string? containerSelector = GetValue<Dictionary<string, string>>(typeof(TResult).Name + "Search")?.GetValueOrDefault("ContainerQuery");
             foreach (IElement item in containerSelector?.GetAllElements(html) ?? Array.Empty<IElement>())
                 found.Add(TResult.CreateSearch(item, this));
+            Debug.WriteLine($"Search found {found.Count} items in website");
             return found;
         }
 
@@ -167,64 +180,91 @@ namespace WebsiteScraper.WebsiteUtilities
         private StringBuilder CreateSearchURL()
         {
             StringBuilder stringBuilder;
+            if (_lastSearch == null)
+                return new();
 
             if (_lastSearch.Search.Contains(RedirectedUrl))
                 return new(_lastSearch.Search);
             else
-                stringBuilder = new(SearchString);
+                stringBuilder = new(SearchPattern);
 
             stringBuilder.Replace("[url]", RedirectedUrl);
-            stringBuilder.Replace("[status]", StatusSearch[(int)_lastSearch.Status]);
-            stringBuilder.Replace("[type]", TypeSearch[0]);
-            if (_lastSearch.Author != null)
-                stringBuilder.Replace("[author]", AuthorSearch?[0]);
-
             StringBuilder tags = new();
-            foreach (KeyValuePair<string, DisableTagState> tag in _lastSearch.DisableTags)
+            foreach (EnableAbleTag tag in _lastSearch.EnableAbleTags.Values)
             {
-                if (DisableTagSearch.TryGetValue(tag.Key, out TagInfo? value))
+                if (SearchPattern.Contains($"[{tag.Key}]"))
                 {
-                    tags.Append(tag.Value == DisableTagState.None ? value.Normal : (tag.Value == DisableTagState.Enabeld ? value.Include : value.Exclude));
-
+                    if (tag.State == EnableAbleState.Enabled)
+                        stringBuilder.Replace($"[{tag.Key}]", tag.Enabled);
+                    else
+                        stringBuilder.Replace($"[{tag.Key}]", tag.NotSet);
                 }
+                else tags.Append(tag.State == EnableAbleState.Enabled ? tag.Enabled : tag.NotSet);
             }
-
-            foreach (KeyValuePair<string, TagState> tag in _lastSearch.Tags)
+            stringBuilder.Replace("[tags]", tags.ToString());
+            tags = new();
+            foreach (DisableAbleTag tag in _lastSearch.DisableAbleTags.Values)
             {
-                if (TagSearch.TryGetValue(tag.Key, out (string notSet, string enabled) value))
-                    tags.Append(tag.Value == TagState.None ? value.notSet : value.enabled);
+                if (SearchPattern.Contains($"[{tag.Key}]"))
+                {
+                    if (tag.State == DisableAbleState.Enabled)
+                        stringBuilder.Replace($"[{tag.Key}]", tag.Enabled);
+                    else if (tag.State == DisableAbleState.Disabled)
+                        stringBuilder.Replace($"[{tag.Key}]", tag.Disabled);
+                    else
+                        stringBuilder.Replace($"[{tag.Key}]", tag.NotSet);
+                }
+                else
+                    tags.Append(tag.State == DisableAbleState.Enabled ? tag.Enabled : tag.State == DisableAbleState.Disabled ? tag.Disabled : tag.NotSet);
             }
-            stringBuilder.Replace("[tag]", tags.ToString());
+            stringBuilder.Replace("[disable_tags]", tags.ToString());
+            foreach (TextTag tag in _lastSearch.TextTags.Values)
+            {
+                if (tag.IsSet)
+                    stringBuilder.Replace($"[{tag.Key}]", tag.InputPattern.Replace("[input]", tag.Input.Replace(" ", tag.Seperator)));
+                else
+                    stringBuilder.Replace($"[{tag.Key}]", tag.NotSet);
+            }
+            foreach (RadioTag radioTag in _lastSearch.RadioTags.Values)
+            {
+                tags = new();
+                foreach (EnableAbleTag tag in radioTag.Tags)
+                {
+                    if (SearchPattern.Contains($"[{tag.Key}]"))
+                    {
+                        if (radioTag.EnabledTag == tag)
+                            stringBuilder.Replace($"[{tag.Key}]", tag.Enabled);
+                        else
+                            stringBuilder.Replace($"[{tag.Key}]", tag.NotSet);
+                    }
+                    else tags.Append(radioTag.EnabledTag == tag ? tag.Enabled : tag.NotSet);
+                }
+                stringBuilder.Replace($"[{radioTag.Key}]", tags.ToString());
+            }
 
-            stringBuilder.Replace("[search]", _lastSearch.Search);
-            stringBuilder.Replace(" ", "%20");
+            stringBuilder.Replace("[search]", _lastSearch?.Search.Replace(" ", Seperator));
             return stringBuilder;
         }
 
         public static bool ProofArray(string[] strings) => strings != null && strings.Length > 0 && !strings[1..].Any(x => string.IsNullOrWhiteSpace(x));
 
 
-        private StringBuilder CreateDirectURL()
+        private StringBuilder CreateDirectURL(string type)
         {
-            string name = _lastSearch.Search.Length > 1 ? _lastSearch.Search[1..][..(-2 + _lastSearch.Search.Length)] : string.Empty;
+            string name = _lastSearch?.Search.Length > 1 ? _lastSearch.Search[1..][..(-2 + _lastSearch.Search.Length)] : string.Empty;
             if (name.Contains(RedirectedUrl))
                 return new(name);
-            StringBuilder stringBuilder = new(DirectSearchString);
+            Dictionary<string, string>? dict = GetValue<Dictionary<string, string>>(type);
+            if (dict == null)
+                return new(null);
+            StringBuilder stringBuilder = new(dict.GetValueOrDefault("DirectSearchPattern"));
             stringBuilder.Replace("[url]", RedirectedUrl);
             stringBuilder.Replace("[id]", name);
             stringBuilder.Replace("[name]", name);
             stringBuilder.Replace("[page]", "0");
-            stringBuilder.Replace(' ', Seperator);
+            stringBuilder.Replace(" ", dict.GetValueOrDefault("Seperator"));
             return stringBuilder;
         }
-    }
-    public class TagInfo
-    {
-        [JsonIgnore]
-        public string[] Info { get => new string[] { Normal, Include, Exclude }; internal set { Include = value[0]; Exclude = value[1]; Normal = value[2]; } }
-        public string Include { get; set; } = string.Empty;
-        public string Exclude { get; set; } = string.Empty;
-        public string Normal { get; set; } = string.Empty;
     }
 }
 

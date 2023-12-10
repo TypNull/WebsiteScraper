@@ -1,4 +1,4 @@
-﻿[![NuGet](https://img.shields.io/nuget/vpre/Shard.WebsiteScraper)](https://www.nuget.org/packages/Shard.WebsiteScraper) [![Downloads](https://img.shields.io/nuget/dt/Shard.WebsiteScraper)](https://www.nuget.org/packages/Shard.WebsiteScraper) [![License](https://img.shields.io/github/license/typnull/WebsiteScraper.svg)](https://github.com/typnull/downloadassistant/blob/master/LICENSE)
+﻿[![NuGet](https://img.shields.io/nuget/vpre/Shard.WebsiteScraper)](https://www.nuget.org/packages/Shard.WebsiteScraper) [![Downloads](https://img.shields.io/nuget/dt/Shard.WebsiteScraper)](https://www.nuget.org/packages/Shard.WebsiteScraper) [![License](https://img.shields.io/github/license/typnull/WebsiteScraper.svg)](https://github.com/TypNull/WebsiteScraper/blob/master/LICENSE.txt)
 # WebsiteScraper
 
 WebsiteScraper is a powerful library that allows you to easily download comics and manga from various websites. With its intuitive interface and advanced parsing capabilities, you can quickly fetch and save your favorite content for offline reading. This readme provides an overview of how to use the WebsiteScraper library and includes some example code snippets to get you started.
@@ -52,6 +52,8 @@ Replace "Destination" with the desired location to save the downloaded chapter.
 An example for a website is provided in the repository. You can refer to this example for a better understanding of how to use the WebsiteScraper library in your own projects.
 
 Please note that the example provided may need to be modified based on the structure and requirements of the specific website you are targeting.
+
+Easily add your own websites with the Website Creator WPF application.
 
 ## Contributing
 
