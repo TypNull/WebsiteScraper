@@ -1,0 +1,214 @@
+﻿<UserControl x:Class="WebsiteCreator.MVVM.View.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WebsiteCreator.MVVM.View"
+             xmlns:viewmodel="clr-namespace:WebsiteCreator.MVVM.ViewModel"
+             d:DataContext="{d:DesignInstance Type=viewmodel:HomeVM}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock"
+               x:Key="Header">
+            <Setter Property="Margin"
+                    Value="5" />
+            <Setter Property="TextAlignment"
+                    Value="Center" />
+            <Setter Property="FontSize"
+                    Value="20" />
+            <Setter Property="Height"
+                    Value="20" />
+            <Setter Property="VerticalAlignment"
+                    Value="Top" />
+            <Setter Property="FontFamily"
+                    Value="Arial" />
+        </Style>
+        <Style TargetType="Border"
+               x:Key="BigBorder">
+            <Setter Property="Cursor"
+                    Value="Hand" />
+            <Setter Property="Height"
+                    Value="150" />
+            <Setter Property="Width"
+                    Value="130" />
+            <Setter Property="CornerRadius"
+                    Value="10" />
+            <Setter Property="Margin"
+                    Value="10" />
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel>
+                <TextBlock Style="{StaticResource Header}"
+                           HorizontalAlignment="Left"
+                           Text="General:"
+                           Foreground="White" />
+                <ScrollViewer VerticalScrollBarVisibility="Disabled"
+                              HorizontalScrollBarVisibility="Auto">
+                    <StackPanel Orientation="Horizontal">
+                        <Border Background="#FFFFAAFD"
+                                HorizontalAlignment="Left"
+                                Style="{StaticResource BigBorder}">
+                            <Border.InputBindings>
+                                <MouseBinding MouseAction="LeftClick"
+                                              Command="{Binding ChangeViewCommand}"
+                                              CommandParameter="Info" />
+                            </Border.InputBindings>
+                            <Grid>
+                                <TextBlock Text="Informations"
+                                           Style="{StaticResource Header}" />
+                                <Border Style="{StaticResource InfoBorder}"
+                                        Tag="{Binding InfoText}">
+                                    <TextBlock Text="{Binding InfoText,Mode=OneWay}"
+                                               FontFamily="Arial"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               TextAlignment="Center" />
+                                </Border>
+                            </Grid>
+                        </Border>
+                        <Border  Background="#FFADE6E2"
+                                 Style="{StaticResource BigBorder}">
+                            <Border.InputBindings>
+                                <MouseBinding MouseAction="LeftClick"
+                                              Command="{Binding ChangeViewCommand}"
+                                              CommandParameter="Search" />
+                            </Border.InputBindings>
+                            <Grid>
+                                <TextBlock Text="Search"
+                                           Style="{StaticResource Header}" />
+                                <Border Style="{StaticResource InfoBorder}"
+                                        Tag="{Binding SearchText,Mode=OneWay}">
+                                    <TextBlock Text="{Binding SearchText,Mode=OneWay}"
+                                               FontFamily="Arial"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               TextAlignment="Center" />
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+                <TextBlock Style="{StaticResource Header}"
+                           HorizontalAlignment="Left"
+                           Text="Comic:"
+                           Foreground="White" />
+                <ScrollViewer VerticalScrollBarVisibility="Disabled"
+                              HorizontalScrollBarVisibility="Auto">
+                    <StackPanel Orientation="Horizontal">
+                        <Border Background="#FF5A87DC"
+                                Style="{StaticResource BigBorder}">
+                            <Border.InputBindings>
+                                <MouseBinding MouseAction="LeftClick"
+                                              Command="{Binding ChangeViewCommand}"
+                                              CommandParameter="Comic.Comic" />
+                            </Border.InputBindings>
+                            <Grid>
+                                <TextBlock Text="Comic"
+                                           Style="{StaticResource Header}" />
+                                <Border Style="{StaticResource InfoBorder}"
+                                        Tag="{Binding ComicItemText,Mode=OneWay}">
+                                    <TextBlock Text="{Binding ComicItemText,Mode=OneWay}"
+                                               FontFamily="Arial"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               TextAlignment="Center" />
+                                </Border>
+                            </Grid>
+                        </Border>
+                        <Border Background="#FF5ADC62"
+                                Style="{StaticResource BigBorder}">
+                            <Border.InputBindings>
+                                <MouseBinding MouseAction="LeftClick"
+                                              Command="{Binding ChangeViewCommand}"
+                                              CommandParameter="Comic.ComicChapter" />
+                            </Border.InputBindings>
+                            <Grid>
+                                <TextBlock Text="Chapter"
+                                           Style="{StaticResource Header}" />
+                                <Border Style="{StaticResource InfoBorder}"
+                                        Tag="{Binding ComicChapterText,Mode=OneWay}">
+                                    <TextBlock Text="{Binding ComicChapterText,Mode=OneWay}"
+                                               FontFamily="Arial"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               TextAlignment="Center" />
+                                </Border>
+                            </Grid>
+                        </Border>
+                        <Border  Background="#FFC6E6AD"
+                                 Style="{StaticResource BigBorder}">
+                            <Border.InputBindings>
+                                <MouseBinding MouseAction="LeftClick"
+                                              Command="{Binding ChangeViewCommand}"
+                                              CommandParameter="Comic.ComicSearch" />
+                            </Border.InputBindings>
+                            <Grid>
+                                <TextBlock Text="Search"
+                                           Style="{StaticResource Header}" />
+                                <Border Style="{StaticResource InfoBorder}"
+                                        Tag="{Binding ComicSearchText,Mode=OneWay}">
+                                    <TextBlock Text="{Binding ComicSearchText,Mode=OneWay}"
+                                               FontFamily="Arial"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               TextAlignment="Center" />
+                                </Border>
+                            </Grid>
+                        </Border>
+
+                        <Border Background="#FFFFBC50"
+                                Style="{StaticResource BigBorder}">
+                            <Border.InputBindings>
+                                <MouseBinding MouseAction="LeftClick"
+                                              Command="{Binding ChangeViewCommand}"
+                                              CommandParameter="Comic.ComicHome" />
+                            </Border.InputBindings>
+                            <Grid>
+                                <TextBlock Text="Home"
+                                           Style="{StaticResource Header}" />
+                                <Border Style="{StaticResource InfoBorder}"
+                                        Tag="{Binding ComicHomeText,Mode=OneWay}">
+                                    <TextBlock Text="{Binding ComicHomeText,Mode=OneWay}"
+                                               FontFamily="Arial"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               TextAlignment="Center" />
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </StackPanel>
+        </ScrollViewer>
+       
+        <StackPanel Grid.Row="1"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Orientation="Horizontal">
+            <Button Style="{StaticResource ModernButton}"
+                    Margin="5"
+                    IsEnabled="{Binding CanExport}"
+                    Content="Export Website"
+                    Command="{Binding ExportCommand }">
+            </Button>
+            <Button Style="{StaticResource ModernButton}"
+                    Margin="5"
+                    Content="Open Website"
+                    Command="{Binding LoadCommand }">
+            </Button>
+            <Button Style="{StaticResource ModernButton}"
+                    Margin="5"
+                    Content="Save Website"
+                    Command="{Binding SaveCommand }">
+            </Button>
+        </StackPanel>
+
+    </Grid>
+</UserControl>

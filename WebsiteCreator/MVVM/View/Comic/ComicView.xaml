@@ -1,0 +1,228 @@
+﻿<UserControl x:Class="WebsiteCreator.MVVM.View.Comic.ComicView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WebsiteCreator.MVVM.View.Comic"
+             xmlns:view="clr-namespace:WebsiteCreator.MVVM.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <ScrollViewer>
+            <StackPanel>
+                <TextBlock FontFamily="Calibre"
+                           Foreground="White"
+                           FontSize="20"
+                           Text="Comic Information"
+                           HorizontalAlignment="Center"
+                           TextAlignment="Center" />
+                <Border Style="{StaticResource Border}" Height="30" Padding="0"
+                        Visibility="{Binding ShowTxtSearchOutput,Converter={StaticResource BoolToVis}}">
+                    <Button Margin="5,5,5,5"
+                            Height="20"
+                            Width="Auto"
+                            Content="Open HTML of website in Editor"
+                            Command="{Binding OpenHtmlCommand}"
+                            CommandParameter="Search"
+                            Style="{StaticResource ModernButton}"
+                            Cursor="Hand" />
+                </Border>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition MaxWidth="100" />
+                    </Grid.ColumnDefinitions>
+                    <view:TextBoxWithOutput Output="{Binding Example}"
+                                            Text="{Binding DirectSearchPattern,Mode=TwoWay}"
+                                            Title="Direct search string"
+                                            Placeholder="e.g. [url]/manga/{[name] or [id]}" />
+                    <view:ModernTextBox Text="{Binding Seperator,Mode=TwoWay}"
+                                        Grid.Column="1"
+                                        VerticalAlignment="Top"
+                                        Title="Seperator"
+                                        Placeholder="e.g. -"
+                                        MaxLength="2" />
+                </Grid>
+
+                <Border Style="{StaticResource Border}" Padding="0">
+                    <StackPanel>
+                        <view:ModernTextBox Margin="-5"
+                                            Text="{Binding SampleSearch,Mode=TwoWay}"
+                                            Title="Sample search"
+                                            Placeholder="e.g. Detective Conan"
+                                            MaxLength="100" />
+                        <Button Margin="5,-5,5,5"
+                                Height="20"
+                                Width="Auto"
+                                Content="Open HTML in editor"
+                                Style="{StaticResource ModernButton}"
+                                Cursor="Hand"
+                                Command="{Binding OpenHtmlCommand}"
+                                CommandParameter="Direct"
+                                Visibility="{Binding ShowTxtDirectOutput,Converter={StaticResource BoolToVis}}" />
+                    </StackPanel>
+                </Border>
+                <view:TextBoxWithOutput Output="{Binding Container,Mode=OneWay}"
+                                        Text="{Binding ContainerQuery,Mode=TwoWay}"
+                                        Visibility="{Binding ShowTxtDirectOutput,Converter={StaticResource BoolToVis}}"
+                                        Title="Query to get item container"
+                                        Placeholder="e.g. \w+" />
+                <StackPanel Visibility="{Binding ComicIsAvailable,Converter={StaticResource BoolToVis}}">
+                    <view:TextBoxWithOutput Output="{Binding Title,Mode=OneWay}"
+                                            Text="{Binding TitleQuery,Mode=TwoWay}"
+                                            Title="Regex String to get the title"
+                                            Placeholder="e.g. \w+" />
+                    <view:TextBoxWithOutput Output="{Binding Description,Mode=OneWay}"
+                                            Text="{Binding DescriptionQuery,Mode=TwoWay}"
+                                            Title="Regex String to get the description"
+                                            Placeholder="e.g. \w+" />
+                    <view:ModernTextBox  Placeholder="e.g.: [w+]"
+                                         Title="Regex Pattern to get the item cover:"
+                                         Text="{Binding CoverQuery,Mode=TwoWay}" />
+                    <Border Background="#FF7ACFFF">
+                        <Grid>
+                            <TextBlock Text="{Binding Cover,Mode=OneWay}"
+                                       TextTrimming="CharacterEllipsis"
+                                       TextWrapping="Wrap"
+                                       FontSize="15"
+                                       Foreground="#FF3F3F3F"
+                                       FontFamily="Arial"
+                                       Background="Transparent">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Visibility"
+                                                Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding CoverSource,Mode=OneWay}"
+                                                         Value="{x:Null}">
+                                                <Setter Property="Visibility"
+                                                        Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                            
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <Image Source="{Binding CoverSource,Mode=OneWay}"
+                                   MaxHeight="100"
+                                   MinWidth="50" />
+                        </Grid>
+                        <Border.Style>
+                            <Style TargetType="Border"
+                                   BasedOn="{StaticResource Border}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Cover,Mode=OneWay}"
+                                                 Value="">
+                                        <Setter Property="Visibility"
+                                                Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                    </Border>
+                    <view:TextBoxWithOutput Output="{Binding Status,Mode=OneWay}"
+                                            Text="{Binding StatusQuery,Mode=TwoWay}"
+                                            Title="Regex String to get status"
+                                            Placeholder="e.g. \w+" />
+                    <view:TextBoxWithOutput Output="{Binding Author,Mode=OneWay}"
+                                            Text="{Binding AuthorQuery,Mode=TwoWay}"
+                                            Title="Regex String to get the autor"
+                                            Placeholder="e.g. \w+" />
+                    <view:TextBoxWithOutput Output="{Binding Genres,Mode=OneWay}"
+                                            Text="{Binding GenresQuery,Mode=TwoWay}"
+                                            Title="Regex String to get the genres"
+                                            Placeholder="e.g. \w+" />
+                    <view:TextBoxWithOutput Output="{Binding Date,Mode=OneWay}"
+                                            Text="{Binding DateQuery,Mode=TwoWay}"
+                                            Title="Regex String to get the last updated date"
+                                            Placeholder="e.g. \w+" />
+                    <view:TextBoxWithOutput Output="{Binding AlternativeTitles,Mode=OneWay}"
+                                            Text="{Binding AlternativeTitlesQuery,Mode=TwoWay}"
+                                            Title="Regex String to get the alternativ names"
+                                            Placeholder="e.g. \w+" />
+                    <Border Padding="2"
+                            Margin="0,0,5,0"
+                            CornerRadius="4"
+                            Background="Transparent"
+                            BorderThickness="2"
+                            BorderBrush="Gray">
+                        <StackPanel >
+                            <view:TextBoxWithOutput Output="{Binding ChapterContainer,Mode=OneWay}"
+                                                    Text="{Binding ChapterContainerQuery,Mode=TwoWay}"
+                                                    Title="Querry to get the chapter container"
+                                                    Placeholder="e.g. \w+" />
+                            <StackPanel Visibility="{Binding IsChapterVisible,Converter={StaticResource BoolToVis}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <ToggleButton  Content="Is ascending"
+                                                   IsChecked="{Binding OrderOfLinks[1]}"
+                                                   Command="{Binding SetChapterOrderCommand}"
+                                                   CommandParameter="1"
+                                                   Margin="5"
+                                                   Style="{StaticResource DarkRadioButton}" />
+                                    <ToggleButton Content="Is descending"
+                                                  IsChecked="{Binding OrderOfLinks[2]}"
+                                                  Command="{Binding SetChapterOrderCommand}"
+                                                  CommandParameter="2"
+                                                  Margin="5"
+                                                  Style="{StaticResource DarkRadioButton}" />
+                                    <ToggleButton  Content="Automatic (not recommended)"
+                                                   IsChecked="{Binding OrderOfLinks[0]}"
+                                                   Command="{Binding SetChapterOrderCommand}"
+                                                   CommandParameter="0"
+                                                   Margin="5"
+                                                   Style="{StaticResource DarkRadioButton}" />
+                                </StackPanel>
+
+                                <view:TextBoxWithOutput Output="{Binding ChapterLink,Mode=OneWay}"
+                                                    Text="{Binding ChapterLinkQuery,Mode=TwoWay}"
+                                                    Title="Regex String to get the chapter links"
+                                                    Placeholder="e.g. \w+" />
+                                <view:TextBoxWithOutput Output="{Binding ChapterDownloadLink,Mode=OneWay}"
+                                                        Text="{Binding ChapterDownloadLinkQuery,Mode=TwoWay}"
+                                                    Title="Regex String to get the download link"
+                                                    Placeholder="e.g. \w+" />
+                            <view:TextBoxWithOutput Output="{Binding ChapterTitle,Mode=OneWay}"
+                                                    Text="{Binding ChapterTitleQuery,Mode=TwoWay}"
+                                                    Title="Regex String to get the chapter name"
+                                                    Placeholder="e.g. \w+" />
+                            <view:TextBoxWithOutput Output="{Binding ChapterNumber,Mode=OneWay}"
+                                                    Text="{Binding ChapterNumberQuery,Mode=TwoWay}"
+                                                    Title="Regex String to get the chapter number"
+                                                    Placeholder="e.g. \w+" />
+                                <view:TextBoxWithOutput Output="{Binding ChapterDate,Mode=OneWay}"
+                                                        Text="{Binding ChapterDateQuery,Mode=TwoWay}"
+                                                        Title="Regex String to get the chapter date"
+                                                        Placeholder="e.g. \w+" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+
+        <Button Margin="5,0,0,0"
+                Height="30"
+                Width="30"
+                HorizontalAlignment="Left"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                VerticalAlignment="Top"
+                Command="{Binding BackCommand}">
+            <Image Source="/Recource/Image/back.png"
+                   RenderOptions.BitmapScalingMode="Fant" />
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <ContentPresenter />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="OverridesDefaultStyle"
+                            Value="True" />
+                </Style>
+            </Button.Style>
+        </Button>
+    </Grid>
+</UserControl>

@@ -1,0 +1,43 @@
+﻿<Application x:Class="WebsiteCreator.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:WebsiteCreator"
+             xmlns:view="clr-namespace:WebsiteCreator.MVVM.View"
+             xmlns:vm="clr-namespace:WebsiteCreator.MVVM.ViewModel"
+             xmlns:comicView="clr-namespace:WebsiteCreator.MVVM.View.Comic"
+             xmlns:comicVM="clr-namespace:WebsiteCreator.MVVM.ViewModel.Comic">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Style/ModernWindow.xaml" />
+                <ResourceDictionary Source="/Style/ModernScrollBar.xaml" />
+                <ResourceDictionary Source="/Style/InfoBorder.xaml" />
+                <ResourceDictionary Source="/Style/ModernButton.xaml" />
+                <ResourceDictionary Source="/Style/DarkRadioButton.xaml" />
+                <ResourceDictionary Source="/Style/ModernTextBox.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <DataTemplate DataType="{x:Type  vm:HomeVM}">
+                <view:HomeView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type  vm:InfoVM}">
+                <view:InfoView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type  vm:SearchVM}">
+                <view:SearchView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type  comicVM:ComicVM}">
+                <comicView:ComicView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type  comicVM:ComicChapterVM}">
+                <comicView:ComicChapterView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type  comicVM:ComicHomeVM}">
+                <comicView:ComicHomeView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type  comicVM:ComicSearchVM}">
+                <comicView:ComicSearchVM />
+            </DataTemplate>
+            <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

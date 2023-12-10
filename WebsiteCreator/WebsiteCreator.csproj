@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <PackageIcon>website.png</PackageIcon>
+    <ApplicationIcon>Recource\Image\website.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Recource\Image\back.png" />
+    <None Remove="Recource\Image\website.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Recource\Image\website.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="gong-wpf-dragdrop" Version="3.2.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Shard.WebsiteScraper" Version="0.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Recource\Image\back.png" />
+    <Resource Include="Recource\Image\website.ico" />
+    <Resource Include="Recource\Image\website.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Recource\Image\website.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

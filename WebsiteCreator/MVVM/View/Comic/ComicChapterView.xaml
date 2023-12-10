@@ -1,0 +1,125 @@
+﻿<UserControl x:Class="WebsiteCreator.MVVM.View.Comic.ComicChapterView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:view="clr-namespace:WebsiteCreator.MVVM.View"
+             xmlns:local="clr-namespace:WebsiteCreator.MVVM.View.Comic"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <ScrollViewer Margin="10">
+            <StackPanel>
+                <TextBlock FontFamily="Calibre"
+                           Foreground="White"
+                           FontSize="20"
+                           Text="Chapter Page"
+                           HorizontalAlignment="Center"
+                           TextAlignment="Center" />
+
+                <Border Style="{StaticResource Border}">
+                    <TextBlock 
+                               HorizontalAlignment="Left">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock" BasedOn="{StaticResource Header}">
+                                <Setter Property="Text"
+                                        Value="{Binding ChapterUrl}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ChapterUrl}" Value="{x:Null}">
+                                        <Setter Property="Text"
+                                                Value="No Chapter Url found" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Border>
+                <StackPanel>
+                    <view:TextBoxWithOutput Placeholder="e.g.: ?style=list"
+                                            Title="Listed Style URL Extension"
+                                            Output="{Binding AddToListUrlOutput}"
+                                            Text="{Binding AddToListUrl,Mode=TwoWay}" />
+                    <Border Style="{StaticResource Border}"
+                            Height="30"
+                            Padding="0"
+                            Visibility="{Binding ShowTxtOutputListed,Converter={StaticResource BoolToVis}}">
+                        <Button Margin="5,5,5,5"
+                                Height="20"
+                                Width="Auto"
+                                Content="Open HTML of Listed website in Editor"
+                                Command="{Binding OpenHtmlCommand}"
+                                CommandParameter="ImageListed"
+                                Style="{StaticResource ModernButton}"
+                                Cursor="Hand" />
+                    </Border>
+                    <view:TextBoxWithOutput Placeholder="e.g.: \w+"
+                                            Title="Listed Style Images Regex"
+                                            Output="{Binding ListImage}"
+                                            Text="{Binding ListImageQuery,Mode=TwoWay}"
+                                            Visibility="{Binding ShowTxtOutputListed,Converter={StaticResource BoolToVis}}" />
+
+                    <view:TextBoxWithOutput Placeholder="e.g.: /p/[page]/"
+                                            Title="Paged Style URL Extension"
+                                            Output="{Binding AddToPagedUrlOutput}"
+                                            Text="{Binding AddToPagedUrl,Mode=TwoWay}" />
+                    <Border Style="{StaticResource Border}"
+                            Height="30"
+                            Padding="0"
+                            Visibility="{Binding ShowTxtOutputPaged,Converter={StaticResource BoolToVis}}">
+                        <Button Margin="5,5,5,5"
+                                Height="20"
+                                Width="Auto"
+                                Content="Open HTML of paged website in Editor"
+                                Command="{Binding OpenHtmlCommand}"
+                                CommandParameter="ImagePaged"
+                                Style="{StaticResource ModernButton}"
+                                Cursor="Hand" />
+                    </Border>
+                    <view:TextBoxWithOutput Placeholder="e.g.: \w+"
+                                            Title="Listed Style Images Regex"
+                                            Output="{Binding PageImage}"
+                                            Text="{Binding PageImageQuery,Mode=TwoWay}"
+                                            Visibility="{Binding ShowTxtOutputPaged,Converter={StaticResource BoolToVis}}" />
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <Setter Property="Visibility"
+                                    Value="Visible" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ChapterUrl}"
+                                             Value="{x:Null}">
+                                    <Setter Property="Visibility"
+                                            Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                </StackPanel>
+               
+            </StackPanel>
+        </ScrollViewer>
+        <Button Margin="5,0,0,0"
+                Height="30"
+                Width="30"
+                HorizontalAlignment="Left"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                VerticalAlignment="Top"
+                Command="{Binding BackCommand}">
+            <Image Source="/Recource/Image/back.png"
+                   RenderOptions.BitmapScalingMode="Fant" />
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <ContentPresenter />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="OverridesDefaultStyle"
+                            Value="True" />
+                </Style>
+            </Button.Style>
+        </Button>
+    </Grid>
+</UserControl>
