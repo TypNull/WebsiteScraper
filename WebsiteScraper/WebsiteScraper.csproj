@@ -8,7 +8,7 @@
     <Title>WebsiteScraper</Title>
     <Authors>Meyn</Authors>
     <Company>Shard</Company>
-    <Version>1.0.0</Version>
+    <Version>1.1.0</Version>
     <Description>WebsiteScraper is a powerful tool that allows you to effortlessly download your favorite comics and manga from various websites. 
 You can easily provide a JSON file containing the website links, and the scraper will do the rest. 
 Using the advanced parsing capabilities of Angelsharp and Regex, the tool efficiently extracts the desired content from the website and saves it onto your device for offline reading. 
@@ -22,6 +22,7 @@ With WebsiteScraper, you can enjoy your favorite comics and manga anytime, anywh
     <PackageTags>WebsiteScraper; Shard; Manga; Comic; JSON; Parser</PackageTags>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes>Change download API and remove unused parameter</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

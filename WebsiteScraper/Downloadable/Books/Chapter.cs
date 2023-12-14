@@ -32,20 +32,20 @@ namespace WebsiteScraper.Downloadable.Books
 
         public Chapter(Comic holdingComic) => HoldingComic = holdingComic;
 
-        public Task<ProgressableContainer<LoadRequest>> DownloadAsync(string destination, string? tempDestination = null, CancellationToken? token = null, Action? finished = null)
+        public Task<ProgressableContainer<GetRequest>> DownloadAsync(string destination, CancellationToken? token = null)
         {
             if (!string.IsNullOrWhiteSpace(DownloadURL))
                 return DownloadImageFromFileAsync(token);
             if (GetValue("AddToListUrl") != null)
-                return DownloadImageListAsync(destination, tempDestination, token, finished);
+                return DownloadImageListAsync(destination, token);
             else if (GetValue("AddToPagedUrl") != null)
-                return DownloadImagePageAsync(destination, tempDestination, token, finished);
+                return DownloadImagePageAsync(destination, token);
             else throw new Exception("Can not donwload this object");
         }
 
-        private async Task<ProgressableContainer<LoadRequest>> DownloadImageListAsync(string destination, string? tempDestination, CancellationToken? token, Action? finished = null)
+        private async Task<ProgressableContainer<GetRequest>> DownloadImageListAsync(string destination, CancellationToken? token)
         {
-            ProgressableContainer<LoadRequest> container = new();
+            ProgressableContainer<GetRequest> container = new();
             await new OwnRequest(async DToken =>
             {
                 string? selector = GetValue("ListImageQuery");
@@ -63,11 +63,10 @@ namespace WebsiteScraper.Downloadable.Books
                 string[] imageLinks = selector.ParseAll(html);
 
                 for (int i = 0; i < imageLinks.Length; i++)
-                    container.Add(new LoadRequest(imageLinks[i], new()
+                    container.Add(new GetRequest(imageLinks[i], new()
                     {
                         IsDownload = true,
-                        DestinationPath = destination,
-                        TempDestination = tempDestination ?? string.Empty,
+                        DirectoryPath = destination,
                         CancellationToken = token,
                         Filename = $"{Order}_{i}.*",
                         Priority = RequestPriority.High,
@@ -83,9 +82,9 @@ namespace WebsiteScraper.Downloadable.Books
             return container;
         }
 
-        private async Task<ProgressableContainer<LoadRequest>> DownloadImagePageAsync(string destination, string? tempDestination, CancellationToken? token, Action? finished = null)
+        private async Task<ProgressableContainer<GetRequest>> DownloadImagePageAsync(string destination, CancellationToken? token)
         {
-            ProgressableContainer<LoadRequest> container = new();
+            ProgressableContainer<GetRequest> container = new();
             await new OwnRequest(async DToken =>
              {
                  bool stop = false;
@@ -106,12 +105,11 @@ namespace WebsiteScraper.Downloadable.Books
                      res.Dispose();
                      if (string.IsNullOrWhiteSpace(imageLink))
                          break;
-                     container.Add(new LoadRequest(imageLink, new()
+                     container.Add(new GetRequest(imageLink, new()
                      {
                          IsDownload = true,
                          Priority = RequestPriority.High,
-                         DestinationPath = destination,
-                         TempDestination = tempDestination ?? string.Empty,
+                         DirectoryPath = destination,
                          CancellationToken = token,
                          Filename = $"{Order}_{i}.*",
                          RequestFailed = (request, path) => { Debug.WriteLine("Failed: " + path); }
@@ -129,7 +127,7 @@ namespace WebsiteScraper.Downloadable.Books
             return container;
         }
 
-        private Task<ProgressableContainer<LoadRequest>> DownloadImageFromFileAsync(CancellationToken? token)
+        private Task<ProgressableContainer<GetRequest>> DownloadImageFromFileAsync(CancellationToken? token)
         {
             throw new NotImplementedException();
         }

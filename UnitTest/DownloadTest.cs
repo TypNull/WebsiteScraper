@@ -1,6 +1,5 @@
 using DownloadAssistant.Request;
 using Requests;
-using System.Diagnostics;
 using WebsiteScraper.Downloadable.Books;
 using WebsiteScraper.WebsiteUtilities;
 
@@ -9,7 +8,7 @@ namespace UnitTest
     [TestClass]
     public class DownloadTest
     {
-        private string _pathToWebsite = @$"{Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName}\Websites\mangaread.org.wsf";
+        private string _pathToWebsite = @$"{Directory.GetParent(Directory.GetCurrentDirectory())!.Parent!.Parent!.Parent!.FullName}\Websites\mangaread.org.wsf";
 
         private Website _mangaread = null!;
 
@@ -80,7 +79,7 @@ namespace UnitTest
             await _mangaread.GetStatusTask();
             Comic onePunch = new("https://www.mangaread.org/manga/one-punch-man-onepunchman/", "One Punch Man", _mangaread);
             await onePunch.UpdateAsync();
-            ProgressableContainer<LoadRequest> container = await onePunch.Chapter.First().DownloadAsync(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\One Punch Man\1\");
+            ProgressableContainer<GetRequest> container = await onePunch.Chapter.First().DownloadAsync(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\One Punch Man\1\");
             container.StateChanged += (s, e) => Console.WriteLine("State: " + e);
             await container.Task;
             Console.WriteLine("Downloaded");

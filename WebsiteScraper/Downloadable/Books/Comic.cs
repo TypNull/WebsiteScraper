@@ -55,7 +55,9 @@ namespace WebsiteScraper.Downloadable.Books
                 _isSearchObject = true,
                 HoldingWebsite = website
             };
-            comic.Chapter = new Chapter[] { new(comic) { Url = GetParsed(html, searchId?.GetValueOrDefault("LastChapter")) } };
+            string url = GetParsed(html, searchId?.GetValueOrDefault("LastChapter"));
+            if (!string.IsNullOrEmpty(url))
+                comic.Chapter = new Chapter[] { new(comic) { Url = url } };
             return comic;
         }
 
