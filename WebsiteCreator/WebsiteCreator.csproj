@@ -15,7 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Recource\Image\website.ico" />
+    <Content Include="Recource\Image\website.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -26,9 +28,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Recource\Image\back.png" />
+    <Resource Include="Recource\Image\back.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Recource\Image\website.ico" />
-    <Resource Include="Recource\Image\website.png" />
+    <Resource Include="Recource\Image\website.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
