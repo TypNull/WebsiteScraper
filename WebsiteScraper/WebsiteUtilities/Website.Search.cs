@@ -203,6 +203,11 @@ namespace WebsiteScraper.WebsiteUtilities
             }
             stringBuilder.Replace("[tags]", tags.ToString());
             tags = new();
+            StringBuilder en_tags = new();
+            bool isEn_Tags = SearchPattern.Contains($"[enabled_tags]");
+            StringBuilder ex_tags = new();
+            bool isEx_Tags = SearchPattern.Contains($"[disabled_tags]");
+
             foreach (DisableAbleTag tag in _lastSearch.DisableAbleTags.Values)
             {
                 if (SearchPattern.Contains($"[{tag.Key}]"))
@@ -214,10 +219,25 @@ namespace WebsiteScraper.WebsiteUtilities
                     else
                         stringBuilder.Replace($"[{tag.Key}]", tag.NotSet);
                 }
+                else if (tag.State == DisableAbleState.Enabled)
+                {
+                    if (isEn_Tags)
+                        en_tags.Append(tag.Enabled);
+                    else tags.Append(tag.Enabled);
+                }
+                else if (tag.State == DisableAbleState.Disabled)
+                {
+                    if (isEx_Tags)
+                        ex_tags.Append(tag.Disabled);
+                    else tags.Append(tag.Disabled);
+                }
                 else
-                    tags.Append(tag.State == DisableAbleState.Enabled ? tag.Enabled : tag.State == DisableAbleState.Disabled ? tag.Disabled : tag.NotSet);
+                    tags.Append(tag.NotSet);
             }
             stringBuilder.Replace("[disable_tags]", tags.ToString());
+            stringBuilder.Replace("[disabled_tags]", ex_tags.ToString());
+            stringBuilder.Replace("[enabled_tags]", en_tags.ToString());
+
             foreach (TextTag tag in _lastSearch.TextTags.Values)
             {
                 if (tag.IsSet)

@@ -1,6 +1,6 @@
 ﻿using AngleSharp.Dom;
 using DownloadAssistant.Base;
-using DownloadAssistant.Request;
+using DownloadAssistant.Requests;
 using Requests;
 using Requests.Options;
 using System.Diagnostics;

@@ -1,4 +1,4 @@
-﻿using DownloadAssistant.Request;
+﻿using DownloadAssistant.Requests;
 using Requests.Options;
 using System.Diagnostics;
 using System.Text.Json;
